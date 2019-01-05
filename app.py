@@ -4,9 +4,18 @@ from flask import request
 import json
 import support_functions as sf
 import uuid
+import requests
+
 app = Flask(__name__)
 
+
 databank= json.load(open('services.json'))
+
+def eval_body(body):
+    if(body[0]=='$'):
+        return eval(body.lstrip('$'))
+    else:
+        return body
 
 @app.route('/', methods=['POST','GET','PUT','DELETE'])
 @app.route('/<p1>', methods=['POST','GET','PUT','DELETE'])
@@ -57,7 +66,7 @@ def method_name(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 = N
                 if(not sf.dictcompare(request.values , pairs['request']['params'])):
                     break        
                 response_obj=pairs['response']
-                response_obj['body']= sf.eval_body(response_obj['body'])
+                response_obj['body']= eval_body(response_obj['body'])
                 return response_obj['body'], response_obj['status_code'],response_obj['headers']
     
     return 'nothing',404

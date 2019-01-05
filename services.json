@@ -75,7 +75,7 @@
                                             },
                                 "response":{
                                             "headers":{"Content-Type ":"application/json"},
-                                            "body":"$return 'eeee'+'099999'",
+                                            "body":"$requests.get('https://www.google.co.in').content",
                                             "status_code":200                                            
                                 }
 

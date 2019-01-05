@@ -1,5 +1,5 @@
 
-
+import requests
 # compare and return true if all the elements in obj1 are available under obj2
 def dictcompare(request_headers,server_headers):
     if(len(server_headers)==0):
@@ -26,8 +26,3 @@ def compare_body( request_body , server_body):
 
 
 
-def eval_body(body):
-    if(body[0]=='$'):
-        return eval(body.lstrip('$'))
-    else:
-        return body

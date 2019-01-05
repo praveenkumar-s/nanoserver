@@ -23,3 +23,11 @@ def prepare_response(headers=None, body=None, status_code =None):
 
 def compare_body( request_body , server_body):
     return True if request_body==request_body else False
+
+
+
+def eval_body(body):
+    if(body[0]=='$'):
+        return eval(body.lstrip('$'))
+    else:
+        return body

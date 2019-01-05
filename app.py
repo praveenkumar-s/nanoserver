@@ -3,7 +3,7 @@ from flask import Flask
 from flask import request
 import json
 import support_functions as sf
-import objectifier
+import uuid
 app = Flask(__name__)
 
 databank= json.load(open('services.json'))
@@ -44,23 +44,20 @@ def method_name(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 = N
     #match maker
 
     for items in service_object['paths']:
-        if(request.path.rstrip('/') == items['path'].rstrip('/') and request.method == items['method']):
+        if(request.path == items['path'] and request.method == items['method']):
             for pairs in items['pairs']:
-                
                 # validate headers
                 if(not sf.dictcompare(request.headers , pairs['request']['headers'])):
                     break                    
-
-
                 # validate body
                 if('body' in pairs['request']):
                     if(not sf.compare_body(request.body , pairs['request']['body'])):
                         break
-
                 # validate query params
                 if(not sf.dictcompare(request.values , pairs['request']['params'])):
                     break        
                 response_obj=pairs['response']
+                response_obj['body']= sf.eval_body(response_obj['body'])
                 return response_obj['body'], response_obj['status_code'],response_obj['headers']
     
     return 'nothing',404
@@ -73,3 +70,7 @@ def service_add():
 
 if __name__ == '__main__':
     app.run()
+
+
+
+

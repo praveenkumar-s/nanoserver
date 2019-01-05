@@ -41,5 +41,48 @@
 
             }
         ]
+    },
+    "f19b7ce6-10c6-11e9-aed4-9cf387a17020":{
+        "descripton":"this is service ID 2",
+        "paths":[
+            {
+                "path":"/sharebox/api/files",
+                "method":"GET",
+                "pairs":[
+                            {
+                                "request":{
+                                            "params":{"token":["757d24dc-bd14-4962-920f-efe65ee331af"]},
+                                            "headers":{}
+                                            },
+                                "response":{
+                                            "headers":{"Content-Type ":"application/json"},
+                                            "body":"[\"hello world\"]",
+                                            "status_code":200                                            
+                                }
+
+                            }
+                        ]
+ 
+            },
+            {
+                "path":"/",
+                "method":"GET",
+                "pairs":[
+                            {
+                                "request":{ 
+                                            "params":{"token":["757d24dc-bd14-4962-920f-efe65ee331af",""]},
+                                            "headers":{}
+                                            },
+                                "response":{
+                                            "headers":{"Content-Type ":"application/json"},
+                                            "body":"$return 'eeee'+'099999'",
+                                            "status_code":200                                            
+                                }
+
+                            } 
+                        ]
+
+            }
+        ]
     }
 }

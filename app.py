@@ -4,6 +4,9 @@ from flask import request
 import json
 import support_functions as sf
 import objectifier
+import json
+from jsonschema import validate
+import uuid
 app = Flask(__name__)
 
 databank= json.load(open('services.json'))
@@ -66,9 +69,20 @@ def method_name(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 = N
     return 'nothing',404
 
 
-@app.route('/service/add')
+@app.route('/service/add',  methods=['POST'])
 def service_add():
-   return "service add"
+    incoming_data=request.json
+    try:
+        validate(incoming_data, json.load(open('incoming_data_schema.json')))
+    except:
+        return "bad request", 400
+
+    id= uuid.uuid1()
+    databank[str(id)]=incoming_data  #pending migration to endurance
+
+    with open('services.json', 'w') as outfile:
+        json.dump(databank, outfile)
+    return str(id),200
 
 
 if __name__ == '__main__':

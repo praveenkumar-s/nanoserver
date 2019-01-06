@@ -1,0 +1,147 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "descripton",
+    "paths"
+  ],
+  "properties": {
+    "descripton": {
+      "$id": "#/properties/descripton",
+      "type": "string",
+      "title": "The Descripton Schema",
+      "default": "",
+      "examples": [
+        "Endurance Mock"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "paths": {
+      "$id": "#/properties/paths",
+      "type": "array",
+      "title": "The Paths Schema",
+      "items": {
+        "$id": "#/properties/paths/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "path",
+          "method",
+          "pairs"
+        ],
+        "properties": {
+          "path": {
+            "$id": "#/properties/paths/items/properties/path",
+            "type": "string",
+            "title": "The Path Schema",
+            "default": "",
+            "examples": [
+              "/api/data_store/slate_001_test"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "method": {
+            "$id": "#/properties/paths/items/properties/method",
+            "type": "string",
+            "title": "The Method Schema",
+            "default": "",
+            "examples": [
+              "GET"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "pairs": {
+            "$id": "#/properties/paths/items/properties/pairs",
+            "type": "array",
+            "title": "The Pairs Schema",
+            "items": {
+              "$id": "#/properties/paths/items/properties/pairs/items",
+              "type": "object",
+              "title": "The Items Schema",
+              "required": [
+                "request",
+                "response"
+              ],
+              "properties": {
+                "request": {
+                  "$id": "#/properties/paths/items/properties/pairs/items/properties/request",
+                  "type": "object",
+                  "title": "The Request Schema",
+                  "required": [
+                    "params",
+                    "headers"
+                  ],
+                  "properties": {
+                    "params": {
+                      "$id": "#/properties/paths/items/properties/pairs/items/properties/request/properties/params",
+                      "type": "object",
+                      "title": "The Params Schema"
+                    },
+                    "headers": {
+                      "$id": "#/properties/paths/items/properties/pairs/items/properties/request/properties/headers",
+                      "type": "object",
+                      "title": "The Headers Schema"
+                    }
+                  }
+                },
+                "response": {
+                  "$id": "#/properties/paths/items/properties/pairs/items/properties/response",
+                  "type": "object",
+                  "title": "The Response Schema",
+                  "required": [
+                    "headers",
+                    "body",
+                    "status_code"
+                  ],
+                  "properties": {
+                    "headers": {
+                      "$id": "#/properties/paths/items/properties/pairs/items/properties/response/properties/headers",
+                      "type": "object",
+                      "title": "The Headers Schema",
+                      "required": [
+                        "Content-Type "
+                      ],
+                      "properties": {
+                        "Content-Type ": {
+                          "$id": "#/properties/paths/items/properties/pairs/items/properties/response/properties/headers/properties/Content-Type ",
+                          "type": "string",
+                          "title": "The Content-type  Schema",
+                          "default": "",
+                          "examples": [
+                            "application/json"
+                          ],
+                          "pattern": "^(.*)$"
+                        }
+                      }
+                    },
+                    "body": {
+                      "$id": "#/properties/paths/items/properties/pairs/items/properties/response/properties/body",
+                      "type": "string",
+                      "title": "The Body Schema",
+                      "default": "",
+                      "examples": [
+                        "{}"
+                      ]
+                    },
+                    "status_code": {
+                      "$id": "#/properties/paths/items/properties/pairs/items/properties/response/properties/status_code",
+                      "type": "integer",
+                      "title": "The Status_code Schema",
+                      "default": 0,
+                      "examples": [
+                        200
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

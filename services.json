@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "9142f00f-10bc-11e9-9666-001a7dda7113":{
         "descripton":"this is service ID 1",
@@ -42,4 +43,93 @@
             }
         ]
     }
+=======
+{
+    "9142f00f-10bc-11e9-9666-001a7dda7113":{
+        "descripton":"this is service ID 1",
+        "paths":[
+            {
+                "path":"/sharebox/api/files",
+                "method":"GET",
+                "pairs":[
+                            {
+                                "request":{
+                                            "params":{"token":["757d24dc-bd14-4962-920f-efe65ee331af"]},
+                                            "headers":{}
+                                            },
+                                "response":{
+                                            "headers":{"Content-Type ":"application/json"},
+                                            "body":"[\"hello world\"]",
+                                            "status_code":200                                            
+                                }
+
+                            }
+                        ]
+ 
+            },
+            {
+                "path":"/",
+                "method":"GET",
+                "pairs":[
+                            {
+                                "request":{
+                                            "params":{"token":["757d24dc-bd14-4962-920f-efe65ee331af",""]},
+                                            "headers":{}
+                                            },
+                                "response":{
+                                            "headers":{"Content-Type ":"application/json"},
+                                            "body":"[\"Welcome to sharebox API\"]",
+                                            "status_code":200                                            
+                                }
+
+                            } 
+                        ]
+
+            }
+        ]
+    },
+    "f19b7ce6-10c6-11e9-aed4-9cf387a17020":{
+        "descripton":"this is service ID 2",
+        "paths":[
+            {
+                "path":"/sharebox/api/files",
+                "method":"GET",
+                "pairs":[
+                            {
+                                "request":{
+                                            "params":{"token":["757d24dc-bd14-4962-920f-efe65ee331af"]},
+                                            "headers":{}
+                                            },
+                                "response":{
+                                            "headers":{"Content-Type ":"application/json"},
+                                            "body":"[\"hello world\"]",
+                                            "status_code":200                                            
+                                }
+
+                            }
+                        ]
+ 
+            },
+            {
+                "path":"/",
+                "method":"GET",
+                "pairs":[
+                            {
+                                "request":{ 
+                                            "params":{"token":["757d24dc-bd14-4962-920f-efe65ee331af",""]},
+                                            "headers":{}
+                                            },
+                                "response":{
+                                            "headers":{"Content-Type ":"application/json"},
+                                            "body":"$requests.get('https://www.google.co.in').content",
+                                            "status_code":200                                            
+                                }
+
+                            } 
+                        ]
+
+            }
+        ]
+    }
+>>>>>>> 80e83b6b21d400c0838c16a0e55fa33bc22a8184
 }

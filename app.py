@@ -7,9 +7,17 @@ import objectifier
 import json
 from jsonschema import validate
 import uuid
+import requests
+from flask import jsonify
 app = Flask(__name__)
 
 databank= json.load(open('services.json'))
+
+def eval_body(body):
+    if(body[0]=='$'):
+        return eval(body.lstrip('$'))
+    else:
+        return body 
 
 @app.route('/', methods=['POST','GET','PUT','DELETE'])
 @app.route('/<p1>', methods=['POST','GET','PUT','DELETE'])
@@ -64,6 +72,9 @@ def method_name(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 = N
                 if(not sf.dictcompare(request.values , pairs['request']['params'])):
                     break        
                 response_obj=pairs['response']
+                response_obj['body']= eval_body(response_obj['body'])
+                if(isinstance(response_obj['body'], dict)):
+                    return jsonify(response_obj['body'])
                 return response_obj['body'], response_obj['status_code'],response_obj['headers']
     
     return 'nothing',404
@@ -95,6 +106,9 @@ def get_documentation():
             return "Requested Service is not available",404
     except:
         return "bad request: header : nano-server-key is mandatory",400
+
+
+
 
 if __name__ == '__main__':
     app.run()

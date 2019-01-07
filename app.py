@@ -56,6 +56,9 @@ def method_name(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 = N
         return "bad request: header : nano-server-key is mandatory",400
     
     #match maker
+    HEADERS=request.headers  # can be accessed from response body for eval
+    ARGS= request.values # can be accessed from response body for eval
+    REQUEST= request # can be accessed form response body for eval
 
     for items in service_object['paths']:
         if(request.path.rstrip('/') == items['path'].rstrip('/') and request.method == items['method']):
@@ -114,4 +117,4 @@ def get_documentation():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(threaded=True)

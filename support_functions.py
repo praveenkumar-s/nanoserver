@@ -21,7 +21,13 @@ def prepare_response(headers=None, body=None, status_code =None):
 
 
 def compare_body( request_body , server_body):
-    return True if request_body==request_body else False
+    if(isinstance(server_body, dict) or  isinstance(server_body, list)):
+        return True if request_body==server_body else False
+    elif(str(server_body).count('%')==2):
+        return True if str(server_body).strip('%') in request_body else False
+    else:
+        return True if request_body==server_body else False
+
 
 
 def nullifier(dict, key):

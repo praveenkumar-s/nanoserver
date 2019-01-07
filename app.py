@@ -30,7 +30,7 @@ def eval_body(body):
 @app.route('/<p1>/<p2>/<p3>/<p4>/<p5>/<p6>/<p7>/<p8>', methods=['POST','GET','PUT','DELETE'])
 @app.route('/<p1>/<p2>/<p3>/<p4>/<p5>/<p6>/<p7>/<p8>/<p9>', methods=['POST','GET','PUT','DELETE'])
 
-def method_name(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 = None , p7 = None , p8 = None , p9 = None):
+def thread_ripper(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 = None , p7 = None , p8 = None , p9 = None):
     path_elements=[]
     path_elements.append(p1)
     path_elements.append(p2)
@@ -68,7 +68,6 @@ def method_name(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 = N
                 if(not sf.dictcompare(request.headers , pairs['request']['headers'])):
                     break                    
 
-
                 # validate body
                 if('body' in pairs['request']):
                     if(not sf.compare_body(request.body , pairs['request']['body'])):
@@ -77,6 +76,7 @@ def method_name(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 = N
                 # validate query params
                 if(not sf.dictcompare(request.values , pairs['request']['params'])):
                     break        
+
                 response_obj=pairs['response']
                 response_obj['body']= eval_body(response_obj['body'])
                 if(isinstance(response_obj['body'], dict)):
@@ -95,7 +95,7 @@ def service_add():
         return "bad request", 400
 
     id= uuid.uuid1()
-    databank[str(id)]=incoming_data  #pending migration to endurance
+    databank[str(id)]=incoming_data  #TODO: pending migration to endurance
 
     with open('services.json', 'w') as outfile:
         json.dump(databank, outfile)

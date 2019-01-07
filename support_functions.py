@@ -21,11 +21,11 @@ def prepare_response(headers=None, body=None, status_code =None):
 
 
 def compare_body( request_body , server_body):
-    if(isinstance(server_body, dict) or  isinstance(server_body, list)):
+    if(isinstance(server_body, dict) or  isinstance(server_body, list)): # if the server object's body is a dict or a list , do a direct comparison
         return True if request_body==server_body else False
-    elif(str(server_body).count('%')==2):
+    elif(str(server_body).count('%')==2):     # if wild card operator is available, do a wildcard
         return True if str(server_body).strip('%') in request_body else False
-    else:
+    else:  # for all other cases do a direct search 
         return True if request_body==server_body else False
 
 

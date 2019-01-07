@@ -85,5 +85,16 @@ def service_add():
     return str(id),200
 
 
+@app.route('/service/docs', methods=['GET'])
+def get_documentation():
+    try:
+        if( request.headers['Nano-Server-Key'] in databank.keys()):
+            service_object=databank[request.headers['Nano-Server-Key']]
+            return service_object , 200
+        else:
+            return "Requested Service is not available",404
+    except:
+        return "bad request: header : nano-server-key is mandatory",400
+
 if __name__ == '__main__':
     app.run()

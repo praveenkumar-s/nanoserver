@@ -45,8 +45,11 @@ def method_name(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 = N
 
     service_object=None
     try:
-        if( request.headers['Nano-Server-Key'] in databank.keys()):
-            service_object=databank[request.headers['Nano-Server-Key']]
+        nano_server_key= sf.nullifier(request.headers,'Nano-Server-Key')
+        if(nano_server_key==None):
+            nano_server_key=request.values['Nano-Server-Key']
+        if( nano_server_key in databank.keys()):
+            service_object=databank[nano_server_key]
         else:
             return "Requested Service is not available",404
     except:

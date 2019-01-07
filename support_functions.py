@@ -24,5 +24,9 @@ def compare_body( request_body , server_body):
     return True if request_body==request_body else False
 
 
-
+def nullifier(dict, key):
+    try:
+        return dict[key]
+    except:
+        return None
 

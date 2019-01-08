@@ -9,9 +9,11 @@ from jsonschema import validate
 import uuid
 import requests
 from flask import jsonify
+import os
+
 app = Flask(__name__)
 
-databank= json.load(open('services.json'))
+databank= sf.get_databank(mode= sf.nullifier(os.environ,'ENDURANCE'))
 
 def eval_body(body):
     if(body[0]=='$'):
@@ -41,7 +43,7 @@ def thread_ripper(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 =
     path_elements.append(p7)
     path_elements.append(p8)
     path_elements.append(p9)
-    print request.headers#del
+    
 
     service_object=None
     try:
@@ -88,26 +90,34 @@ def thread_ripper(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 =
 
 @app.route('/service/add',  methods=['POST'])
 def service_add():
+    
     incoming_data=request.json
     try:
         validate(incoming_data, json.load(open('incoming_data_schema.json')))
+        if(request.headers['Authorization']!=os.environ['Authorization']):
+            return 'Invalid key',404
     except:
         return "bad request", 400
 
     id= uuid.uuid1()
-    databank[str(id)]=incoming_data  #TODO: pending migration to endurance
+    databank[str(id)]=incoming_data  
 
-    with open('services.json', 'w') as outfile:
-        json.dump(databank, outfile)
-    return str(id),200
+    if(sf.put_databank(sf.nullifier(os.environ,'ENDURANCE'), databank)):
+        return str(id),200
+    else:
+        return 'error',500
 
 
 @app.route('/service/docs', methods=['GET'])
 def get_documentation():
+    nano_server_key= sf.nullifier(request.headers,'Nano-Server-Key')
+    
     try:
-        if( request.headers['Nano-Server-Key'] in databank.keys()):
-            service_object=databank[request.headers['Nano-Server-Key']]
-            return service_object , 200
+        if(nano_server_key==None):
+            nano_server_key=request.values['Nano-Server-Key']
+        if( nano_server_key in databank.keys()):
+            service_object=databank[nano_server_key]
+            return jsonify(service_object)
         else:
             return "Requested Service is not available",404
     except:

@@ -6,6 +6,7 @@
 # Steps to Add your service to Nano Server: 
 
     POST: https://<nano-server-url>/service/add
+    headers: Authorization: <authorization token setup under Authorization environment variable during deployment of this app>
 
     body:
 

@@ -1,4 +1,7 @@
 import requests
+import os
+import json
+
 # compare and return true if all the elements in obj1 are available under obj2
 def dictcompare(request_headers,server_headers):
     if(len(server_headers)==0):
@@ -36,3 +39,21 @@ def nullifier(dict, key):
     except:
         return None
 
+
+def get_databank(mode):
+    if(mode):
+        rs=requests.get('https://ndurance.herokuapp.com/api/data_store/saas', headers={"x-api-key":os.environ["ENDURANCE_KEY"]})
+        print "Storage Mode: Cloud"
+        return rs.json() if rs.status_code==200 else json.load(open('services.json'))
+    else:
+        print "Storage Mode: Local"
+        return json.load(open('services.json'))
+
+def put_databank(mode, data):
+    if(mode):
+        rs=requests.post('https://ndurance.herokuapp.com/api/data_store/saas', headers={"x-api-key":os.environ["ENDURANCE_KEY"]}, json=data)
+        return True if rs.status_code==201 else False
+    else:
+        with open('services.json', 'w') as outfile:
+            json.dump(data, outfile)
+        return True

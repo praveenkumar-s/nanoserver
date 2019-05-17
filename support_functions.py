@@ -43,10 +43,10 @@ def nullifier(dict, key):
 def get_databank(mode):
     if(mode):
         rs=requests.get('https://ndurance.herokuapp.com/api/data_store/saas', headers={"x-api-key":os.environ["ENDURANCE_KEY"]})
-        print "Storage Mode: Cloud"
+        print("Storage Mode: Cloud")
         return rs.json() if rs.status_code==200 else json.load(open('services.json'))
     else:
-        print "Storage Mode: Local"
+        print("Storage Mode: Local")
         return json.load(open('services.json'))
 
 def put_databank(mode, data):
@@ -57,3 +57,5 @@ def put_databank(mode, data):
         with open('services.json', 'w') as outfile:
             json.dump(data, outfile)
         return True
+
+    

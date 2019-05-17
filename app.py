@@ -127,4 +127,4 @@ def get_documentation():
 
 
 if __name__ == '__main__':
-    app.run(threaded=True)
+    app.run(debug=False , host='0.0.0.0', port=environ.get("PORT", 5000), threaded=True)

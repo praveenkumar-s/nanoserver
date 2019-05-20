@@ -41,8 +41,8 @@ def nullifier(dict, key):
 
 
 def get_databank(mode):
-    if(mode):
-        rs=requests.get('https://ndurance.herokuapp.com/api/data_store/saas', headers={"x-api-key":os.environ["ENDURANCE_KEY"]})
+    if(mode=='true'):
+        rs=requests.get('https://qube-endurance.herokuapp.com/api/data_store/saas', headers={"x-api-key":os.environ["ENDURANCE_KEY"]})
         print("Storage Mode: Cloud")
         return rs.json() if rs.status_code==200 else json.load(open('services.json'))
     else:
@@ -50,8 +50,8 @@ def get_databank(mode):
         return json.load(open('services.json'))
 
 def put_databank(mode, data):
-    if(mode):
-        rs=requests.post('https://ndurance.herokuapp.com/api/data_store/saas', headers={"x-api-key":os.environ["ENDURANCE_KEY"]}, json=data)
+    if(mode=='true'):
+        rs=requests.post('https://qube-endurance.herokuapp.com/api/data_store/saas', headers={"x-api-key":os.environ["ENDURANCE_KEY"]}, json=data)
         return True if rs.status_code==201 else False
     else:
         with open('services.json', 'w') as outfile:

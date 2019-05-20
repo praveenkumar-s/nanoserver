@@ -90,7 +90,7 @@ def thread_ripper(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 =
 
 @app.route('/service/add',  methods=['POST'])
 def service_add():
-    
+    incoming_key=None
     incoming_data=request.json
     try:
         validate(incoming_data, json.load(open('incoming_data_schema.json')))
@@ -98,8 +98,14 @@ def service_add():
             return 'Invalid key',404
     except:
         return "bad request", 400
-
-    id= uuid.uuid1()
+    try:
+        incoming_key=request.headers['Nano-Server-Key']
+    except:
+        pass
+    if(incoming_key is not None):
+        id=incoming_key
+    else:
+        id= uuid.uuid1()
     databank[str(id)]=incoming_data  
 
     if(sf.put_databank(sf.nullifier(os.environ,'ENDURANCE'), databank)):

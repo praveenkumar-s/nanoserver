@@ -65,20 +65,21 @@ def thread_ripper(p1=None , p2 = None , p3 = None , p4 = None , p5 = None , p6 =
     for items in service_object['paths']:
         if(request.path.rstrip('/') == items['path'].rstrip('/') and request.method == items['method']):
             for pairs in items['pairs']:
-                
-                # validate headers
-                if(not sf.dictcompare(request.headers , pairs['request']['headers'])):
-                    break                    
+                try:
+                    # validate headers
+                    if(not sf.dictcompare(request.headers , pairs['request']['headers'])):
+                        break                    
 
-                # validate body
-                if('body' in pairs['request']):
-                    if(not sf.compare_body(request.body , pairs['request']['body'])):
-                        break
+                    # validate body
+                    if('body' in pairs['request']):
+                        if(not sf.compare_body(request.body , pairs['request']['body'])):
+                            break
 
-                # validate query params
-                if(not sf.dictcompare(request.values , pairs['request']['params'])):
-                    break        
-
+                    # validate query params
+                    if(not sf.dictcompare(request.values , pairs['request']['params'])):
+                        break        
+                except:
+                    print("Exception occured during matching, match may not be perfect")
                 response_obj=pairs['response']
                 response_obj['body']= eval_body(response_obj['body'])
                 if(isinstance(response_obj['body'], dict)):
